@@ -6,24 +6,17 @@
 package com.view;
 
 import com.dao.AnswerDAO;
-import com.dao.LawDAO;
-import com.dao.getCategoryfromCateName;
 import com.dao.getListAnswer;
-import com.dao.getListLaw;
 import com.dao.getListQues;
 import com.model.Answers;
-import com.model.Categorys;
-import com.model.Law;
 import com.model.Question;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -49,30 +42,37 @@ public class QuanLyDapAn extends javax.swing.JFrame {
     private ArrayList<Question> listques = new ArrayList<>();
     private JTextField txtanswerdetail = new JTextField();
     private int quesidisselected = 0;
-    
+
     public QuanLyDapAn() {
         initComponents();
-        
+
         this.setLayout(new GridBagLayout());
-        
         GridBagConstraints constraints = new GridBagConstraints();
+        JPanel jPaneltop = new JPanel(new GridLayout(2, 1));
         JLabel lbtitlepage = new JLabel("Quản lý Đáp Án");
         lbtitlepage.setFont(new Font("hihi", Font.BOLD, 24));
+        jPaneltop.add(lbtitlepage);
+        JPanel jsearch = new JPanel(new GridLayout(1, 2));
+        jsearch.add(txtSearch);
+        jsearch.add(buttonsearch);
+
+        jPaneltop.add(jsearch);
+
         constraints.gridx = 0;
         constraints.gridy = 0;
-        this.add(lbtitlepage, constraints);
+        this.add(jPaneltop, constraints);
         model = new DefaultTableModel();
         model.addColumn("Answer ID");
         model.addColumn("Answer Detail");
         model.addColumn("Question");
         model.addColumn("Is Correct");
         jTable1.setModel(model);
-        
+
         constraints.gridx = 0;
         constraints.gridy = 1;
-        
+        jpaneltable.setPreferredSize(new Dimension(1300, 300));
         this.add(jpaneltable, constraints);
-        
+
         JPanel jPanelshowdetailrow = new JPanel();
 
 //        jPanelshowdetailrow.add(jScrollPane2);
@@ -84,13 +84,13 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         jPanelshowdetailrow.setLayout(new BoxLayout(jPanelshowdetailrow, BoxLayout.X_AXIS));
         constraints.gridx = 0;
         constraints.gridy = 2;
-        
+
         this.add(jPanelshowdetailrow, constraints);
-        
+
         JPanel jpallinput = new JPanel(new GridLayout(1, 4));
-        
+
         JPanel jpCombo = new JPanel(new GridLayout(1, 2));
-        
+
         getListQues lq = new getListQues();
         JLabel lbCombo = new JLabel("Question ID:");
         jpCombo.add(lbCombo);
@@ -99,27 +99,27 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         for (int i = 0; i < listques.size(); i++) {
             comboBoxModel.addElement(listques.get(i).getQuestionID());
         }
-        
+
         jComboBox1.setModel(comboBoxModel);
         jComboBox1.setSelectedIndex(1);
-        
+
         jpCombo.add(jComboBox1);
         jpCombo.setVisible(true);
-        
+
         JPanel jpanswerdetail = new JPanel(new GridLayout(1, 2));
         JLabel lbanswerdetail = new JLabel("Answer Detail:");
         jpanswerdetail.add(lbanswerdetail);
         txtanswerdetail.setPreferredSize(new Dimension(200, 35));
         jpanswerdetail.add(txtanswerdetail);
         jpanswerdetail.setVisible(true);
-        
+
         JPanel jpiscorrect = new JPanel(new GridLayout(1, 2));
         JLabel lbiscorrect = new JLabel("Is Correct:");
         jpiscorrect.add(lbiscorrect);
         JPanel jpdungsai = new JPanel(new GridLayout(2, 1));
         jpdungsai.add(radiodung);
         jpdungsai.add(radiosai);
-        
+
         jpiscorrect.add(jpdungsai);
         jpiscorrect.setVisible(true);
 
@@ -128,11 +128,11 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         jpallinput.add(jpanswerdetail);
         jpallinput.add(jpiscorrect);
         jpallinput.setVisible(true);
-        
+
         constraints.gridx = 0;
         constraints.gridy = 3;
         this.add(jpallinput, constraints);
-        
+
         JPanel jPanelcontroll = new JPanel(new GridBagLayout());
         GridBagConstraints bagConstraints = new GridBagConstraints();
         bagConstraints.gridx = 0;
@@ -148,13 +148,13 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         bagConstraints.gridx = 3;
         bagConstraints.gridy = 0;
         jPanelcontroll.add(buttonBack, bagConstraints);
-        
+
         constraints.gridx = 0;
         constraints.gridy = 4;
         this.add(jPanelcontroll, constraints);
-        
+
     }
-    
+
     public void showtable() {
         model.setNumRows(0);
         for (int i = 0; i < arraylistAnswer.size(); i++) {
@@ -165,7 +165,7 @@ public class QuanLyDapAn extends javax.swing.JFrame {
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -185,6 +185,8 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         buttonBack = new javax.swing.JButton();
         radiodung = new javax.swing.JRadioButton();
         radiosai = new javax.swing.JRadioButton();
+        txtSearch = new javax.swing.JTextField();
+        buttonsearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -230,7 +232,7 @@ public class QuanLyDapAn extends javax.swing.JFrame {
             .addGroup(jpaneltableLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtextdetail.setColumns(60);
@@ -277,6 +279,13 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         buttonGroup1.add(radiosai);
         radiosai.setText("Sai");
 
+        buttonsearch.setText("Search");
+        buttonsearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonsearchMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -294,9 +303,10 @@ public class QuanLyDapAn extends javax.swing.JFrame {
                                 .addGap(281, 281, 281)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(radiodung)
-                                    .addComponent(radiosai))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpaneltable, 1320, 1320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(radiosai)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jpaneltable, 1320, 1320, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
@@ -307,7 +317,12 @@ public class QuanLyDapAn extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addComponent(buttonXoa)
                         .addGap(38, 38, 38)
-                        .addComponent(buttonBack)))
+                        .addComponent(buttonBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(294, 294, 294)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonsearch)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -316,16 +331,18 @@ public class QuanLyDapAn extends javax.swing.JFrame {
                 .addGap(96, 96, 96)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jpaneltable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(456, 456, 456))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(jpaneltable, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(radiodung)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(radiosai)
-                .addGap(125, 125, 125)
+                .addGap(48, 48, 48)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonsearch))
+                .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -350,7 +367,7 @@ public class QuanLyDapAn extends javax.swing.JFrame {
                 arraylistAnswer = listAnswer.getListAnswer(quesid);
                 showtable();
             }
-            
+
         }
     }//GEN-LAST:event_jComboBox1ItemStateChanged
 
@@ -358,20 +375,27 @@ public class QuanLyDapAn extends javax.swing.JFrame {
         int index = jTable1.getSelectedRow();
         String title = jTable1.getValueAt(index, 1).toString();
         String iscorrect = jTable1.getValueAt(index, 3).toString();
-        
+
         jtextdetail.setText(title);
         jtexiscorrect.setText(iscorrect);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-                        HomeAdmin le = new HomeAdmin();
-                            le.setVisible(true);
-                            this.dispose();
+        HomeAdmin le = new HomeAdmin();
+        le.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void buttonThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonThemActionPerformed
-        
+
         String detail = txtanswerdetail.getText();
+        boolean check = false;
+        if (detail.isEmpty()) {
+            check = false;
+            JOptionPane.showMessageDialog(rootPane, "Không được để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            check = true;
+        }
         int iscorrect = 0;
         if (radiodung.isSelected()) {
             iscorrect = 1;
@@ -379,51 +403,93 @@ public class QuanLyDapAn extends javax.swing.JFrame {
             iscorrect = 0;
         }
         int quesid = (int) jComboBox1.getSelectedItem();
-        
-        getListAnswer listAnswer = new getListAnswer();
-        if (listAnswer.getListAnswer(quesid).size() > 3) {
-            JOptionPane.showMessageDialog(rootPane, "Đáp án không được vượt quá 4!!");
-            arraylistAnswer = listAnswer.getListAnswer(quesid);
-            showtable();
-            txtanswerdetail.requestFocusInWindow();
-        } else {
-            AnswerDAO answerDAO = new AnswerDAO();
-            answerDAO.addanswer(detail, iscorrect, quesid);
-            arraylistAnswer = listAnswer.getListAnswer(quesid);
-            
-            showtable();
+
+        if (check == true) {
+            getListAnswer listAnswer = new getListAnswer();
+            if (listAnswer.getListAnswer(quesid).size() > 3) {
+                JOptionPane.showMessageDialog(rootPane, "Đáp án không được vượt quá 4!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                arraylistAnswer = listAnswer.getListAnswer(quesid);
+                showtable();
+                txtanswerdetail.requestFocusInWindow();
+            } else {
+                AnswerDAO answerDAO = new AnswerDAO();
+                answerDAO.addanswer(detail, iscorrect, quesid);
+                arraylistAnswer = listAnswer.getListAnswer(quesid);
+
+                showtable();
+            }
         }
+
     }//GEN-LAST:event_buttonThemActionPerformed
 
     private void buttonXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonXoaActionPerformed
         int index = jTable1.getSelectedRow();
-        int idanwer = (int) jTable1.getValueAt(index, 0);
-        int quesid = (int) jTable1.getValueAt(index, 2);
-        AnswerDAO answerDAO = new AnswerDAO();
-        answerDAO.deleteAnswers(idanwer);
-        getListAnswer listAnswer = new getListAnswer();
-        arraylistAnswer = listAnswer.getListAnswer(quesid);
-        showtable();
+        if (index > 0) {
+
+            int idanwer = (int) jTable1.getValueAt(index, 0);
+            int quesid = (int) jTable1.getValueAt(index, 2);
+            int confirm = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn xoá không?", "Confrim", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (confirm == 0) {
+            AnswerDAO answerDAO = new AnswerDAO();
+            answerDAO.deleteAnswers(idanwer);
+            getListAnswer listAnswer = new getListAnswer();
+            arraylistAnswer = listAnswer.getListAnswer(quesid);
+            showtable();
+            JOptionPane.showMessageDialog(rootPane, "Xoá thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            jTable1.setRowSelectionInterval(0, 0);
+        }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_buttonXoaActionPerformed
 
     private void buttonSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSuaActionPerformed
         int index = jTable1.getSelectedRow();
-        int idanwer = (int) jTable1.getValueAt(index, 0);
-        int quesid = (int) jComboBox1.getSelectedItem();
-        int iscorrect = 0;
-        if (radiodung.isSelected()) {
-            iscorrect = 1;
-        } else if (radiosai.isSelected()) {
-            iscorrect = 0;
+        if (index > 0) {
+            int idanwer = (int) jTable1.getValueAt(index, 0);
+            int quesid = (int) jComboBox1.getSelectedItem();
+            int iscorrect = 0;
+            if (radiodung.isSelected()) {
+                iscorrect = 1;
+            } else if (radiosai.isSelected()) {
+                iscorrect = 0;
+            }
+            String detail = txtanswerdetail.getText();
+
+            boolean check = false;
+            if (detail.isEmpty()) {
+                check = false;
+                JOptionPane.showMessageDialog(rootPane, "Không được để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                check = true;
+            }
+
+            if (check == true) {
+                AnswerDAO answerDAO = new AnswerDAO();
+                answerDAO.updateanswer(idanwer, detail, iscorrect, quesid);
+
+                getListAnswer listAnswer = new getListAnswer();
+                arraylistAnswer = listAnswer.getListAnswer(quesid);
+                showtable();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-        String detail = txtanswerdetail.getText();
-        AnswerDAO answerDAO = new AnswerDAO();
-        answerDAO.updateanswer(idanwer, detail, iscorrect, quesid);
-        
-        getListAnswer listAnswer = new getListAnswer();
-        arraylistAnswer = listAnswer.getListAnswer(quesid);
-        showtable();
     }//GEN-LAST:event_buttonSuaActionPerformed
+
+    private void buttonsearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonsearchMouseClicked
+        String key = txtSearch.getText();
+//        if(key==null){
+//        txtSearch.requestFocusInWindow();
+//        }
+        int quesid = (int) jComboBox1.getSelectedItem();
+        quesidisselected = quesid;
+        AnswerDAO answerDAO = new AnswerDAO();
+        arraylistAnswer = answerDAO.timkiem(key, quesidisselected);
+        showtable();
+    }//GEN-LAST:event_buttonsearchMouseClicked
 
     /**
      * @param args the command line arguments
@@ -467,6 +533,7 @@ public class QuanLyDapAn extends javax.swing.JFrame {
     private javax.swing.JButton buttonSua;
     private javax.swing.JButton buttonThem;
     private javax.swing.JButton buttonXoa;
+    private javax.swing.JButton buttonsearch;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -477,5 +544,6 @@ public class QuanLyDapAn extends javax.swing.JFrame {
     private javax.swing.JTextArea jtextdetail;
     private javax.swing.JRadioButton radiodung;
     private javax.swing.JRadioButton radiosai;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

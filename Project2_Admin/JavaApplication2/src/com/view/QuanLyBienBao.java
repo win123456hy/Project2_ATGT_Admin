@@ -488,9 +488,9 @@ public class QuanLyBienBao extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-                      HomeAdmin le = new HomeAdmin();
-                            le.setVisible(true);
-                            this.dispose();
+        HomeAdmin le = new HomeAdmin();
+        le.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void buttonThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonThemActionPerformed
@@ -512,26 +512,26 @@ public class QuanLyBienBao extends javax.swing.JFrame {
         }
 
         String link = null;
-        if(file==null)
-            link=null;
-        else{
-        switch (catenam) {
-            case "Biển Báo Cấm":
-                link = "Images/Bien_Bao_Cam/" + Paths.get(file.getName());
-                break;
-            case "Biển Báo Chỉ Dẫn":
-                link = "Images/Bien_Bao_Chi_Dan/" + Paths.get(file.getName());
-                break;
-            case "Biển Báo Hiệu Lệnh":
-                link = "Images/Bien_Bao_Hieu_Lenh/" + Paths.get(file.getName());
-                break;
-            case "Biển Báo Nguy Hiểm":
-                link = "Images/Bien_Bao_Nguy_Hiem/" + Paths.get(file.getName());
-                break;
-            default:
-                link = null;
-                break;
-        }
+        if (file == null) {
+            link = null;
+        } else {
+            switch (catenam) {
+                case "Biển Báo Cấm":
+                    link = "Images/Bien_Bao_Cam/" + Paths.get(file.getName());
+                    break;
+                case "Biển Báo Chỉ Dẫn":
+                    link = "Images/Bien_Bao_Chi_Dan/" + Paths.get(file.getName());
+                    break;
+                case "Biển Báo Hiệu Lệnh":
+                    link = "Images/Bien_Bao_Hieu_Lenh/" + Paths.get(file.getName());
+                    break;
+                case "Biển Báo Nguy Hiểm":
+                    link = "Images/Bien_Bao_Nguy_Hiem/" + Paths.get(file.getName());
+                    break;
+                default:
+                    link = null;
+                    break;
+            }
         }
         if (check == true) {
             TrafficDAO trafficDAO = new TrafficDAO();
@@ -554,91 +554,118 @@ public class QuanLyBienBao extends javax.swing.JFrame {
     private void buttonXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonXoaActionPerformed
 
         int index = jTable1.getSelectedRow();
-        int idtraff = (int) jTable1.getValueAt(index, 0);
+        if (index > 0) {
+            int idtraff = (int) jTable1.getValueAt(index, 0);
 
-        int confirm = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn xoá không?", "Confrim", JOptionPane.YES_NO_CANCEL_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn xoá không?", "Confrim", JOptionPane.YES_NO_CANCEL_OPTION);
 
-        if (confirm == 0) {
-            TrafficDAO trafficDAO = new TrafficDAO();
-            trafficDAO.deletetraffic(idtraff);
+            if (confirm == 0) {
+                TrafficDAO trafficDAO = new TrafficDAO();
+                trafficDAO.deletetraffic(idtraff);
 
-            String catename = jComboBox1.getSelectedItem().toString();
-            for (int i = 0; i < listcate.size(); i++) {
-                if (listcate.get(i).getCategoryName().equals(catename)) {
-                    getListBienBao libb = new getListBienBao();
-                    arraytraffic = libb.getltraffic(listcate.get(i).getCategoryID());
-                    showtable();
+                String catename = jComboBox1.getSelectedItem().toString();
+                for (int i = 0; i < listcate.size(); i++) {
+                    if (listcate.get(i).getCategoryName().equals(catename)) {
+                        getListBienBao libb = new getListBienBao();
+                        arraytraffic = libb.getltraffic(listcate.get(i).getCategoryID());
+                        showtable();
+                    }
+
                 }
+                JOptionPane.showMessageDialog(rootPane, "Xoá thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
 
+            } else {
+                jTable1.setRowSelectionInterval(0, 0);
             }
-            JOptionPane.showMessageDialog(rootPane, "Xoá thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-
-        } else {
-            jTable1.setRowSelectionInterval(0, 0);
-        }
+        } else 
+             JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_buttonXoaActionPerformed
 
     private void buttonSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSuaActionPerformed
         int index = jTable1.getSelectedRow();
-        int idtraffic = (int) jTable1.getValueAt(index, 0);
-        String title = txttraffictitle.getText();
-        String detail = txttrafficdetail.getText();
+        if (index > 0) {
+            int idtraffic = (int) jTable1.getValueAt(index, 0);
+            String title = txttraffictitle.getText();
+            String detail = txttrafficdetail.getText();
 
-        boolean check = true;
-        if (title == null || detail == null || file == null) {
-            check = false;
-            JOptionPane.showMessageDialog(rootPane, "Không đươc để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-
-        String catenam = jComboBox1.getSelectedItem().toString();
-        int cateid = 0;
-        for (int i = 0; i < listcate.size(); i++) {
-            if (listcate.get(i).getCategoryName().equals(catenam)) {
-                cateid = listcate.get(i).getCategoryID();
-                break;
+            boolean check = true;
+            if (title == null || detail == null || file == null) {
+                check = false;
+                JOptionPane.showMessageDialog(rootPane, "Không đươc để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
-        }
 
+            String catenam = jComboBox1.getSelectedItem().toString();
+            int cateid = 0;
+            for (int i = 0; i < listcate.size(); i++) {
+                if (listcate.get(i).getCategoryName().equals(catenam)) {
+                    cateid = listcate.get(i).getCategoryID();
+                    break;
+                }
+            }
+
+            String link = null;
+            switch (catenam) {
+                case "Biển Báo Cấm":
+                    link = "Images/Bien_Bao_Cam/" + Paths.get(file.getName());
+                    break;
+                case "Biển Báo Chỉ Dẫn":
+                    link = "Images/Bien_Bao_Chi_Dan/" + Paths.get(file.getName());
+                    break;
+                case "Biển Báo Hiệu Lệnh":
+                    link = "Images/Bien_Bao_Hieu_Lenh/" + Paths.get(file.getName());
+                    break;
+                case "Biển Báo Nguy Hiểm":
+                    link = "Images/Bien_Bao_Nguy_Hiem/" + Paths.get(file.getName());
+                    break;
+                default:
+                    link = null;
+                    break;
+            }
+
+            if (check == true) {
+                TrafficDAO traffic = new TrafficDAO();
+                traffic.updatetraffic(idtraffic, link, title, detail, cateid);
+
+                String catename = jComboBox1.getSelectedItem().toString();
+                for (int i = 0; i < listcate.size(); i++) {
+                    if (listcate.get(i).getCategoryName().equals(catename)) {
+                        getListBienBao libb = new getListBienBao();
+                        arraytraffic = libb.getltraffic(listcate.get(i).getCategoryID());
+                        showtable();
+                    }
+
+                }
+            } else {
+            }
+            buttonchooseimage.setText("Chọn ảnh");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_buttonSuaActionPerformed
+
+    private void buttonchooseimageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonchooseimageMouseClicked
+        // TODO add your handling code here:
+        String catenam = jComboBox1.getSelectedItem().toString();
         String link = null;
         switch (catenam) {
             case "Biển Báo Cấm":
-                link = "Images/Bien_Bao_Cam/" + Paths.get(file.getName());
+                link = "D:\\Github\\Project2_ATGT_Admin\\Project2_Admin\\JavaApplication2\\Images\\Bien_Bao_Cam";
                 break;
             case "Biển Báo Chỉ Dẫn":
-                link = "Images/Bien_Bao_Chi_Dan/" + Paths.get(file.getName());
+                link = "D:\\Github\\Project2_ATGT_Admin\\Project2_Admin\\JavaApplication2\\Images\\Bien_Bao_Chi_Dan";
                 break;
             case "Biển Báo Hiệu Lệnh":
-                link = "Images/Bien_Bao_Hieu_Lenh/" + Paths.get(file.getName());
+                link = "D:\\Github\\Project2_ATGT_Admin\\Project2_Admin\\JavaApplication2\\Images\\Bien_Bao_Hieu_Lenh";
                 break;
             case "Biển Báo Nguy Hiểm":
-                link = "Images/Bien_Bao_Nguy_Hiem/" + Paths.get(file.getName());
+                link = "D:\\Github\\Project2_ATGT_Admin\\Project2_Admin\\JavaApplication2\\Images\\Bien_Bao_Nguy_Hiem";
                 break;
             default:
                 link = null;
                 break;
         }
 
-        if (check == true) {
-            TrafficDAO traffic = new TrafficDAO();
-            traffic.updatetraffic(idtraffic, link, title, detail, cateid);
-
-            String catename = jComboBox1.getSelectedItem().toString();
-            for (int i = 0; i < listcate.size(); i++) {
-                if (listcate.get(i).getCategoryName().equals(catename)) {
-                    getListBienBao libb = new getListBienBao();
-                    arraytraffic = libb.getltraffic(listcate.get(i).getCategoryID());
-                    showtable();
-                }
-
-            }
-        }
-        buttonchooseimage.setText("Chọn ảnh");
-    }//GEN-LAST:event_buttonSuaActionPerformed
-
-    private void buttonchooseimageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonchooseimageMouseClicked
-        // TODO add your handling code here:
-
-        fileChooser = new JFileChooser(new File("D:\\Github\\Project2_Admin\\JavaApplication2\\Images"));
+        fileChooser = new JFileChooser(new File(link));
         fileChooser.setFileFilter(new FileFilter() {
 
             @Override

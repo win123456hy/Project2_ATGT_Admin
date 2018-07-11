@@ -44,9 +44,11 @@
                                   <Component id="radiosai" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jpaneltable" min="1320" pref="1320" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jpaneltable" min="1320" pref="1320" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -60,6 +62,12 @@
                       <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Component id="buttonBack" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="294" max="-2" attributes="0"/>
+                      <Component id="txtSearch" min="-2" pref="148" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="buttonsearch" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -72,17 +80,19 @@
               <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Component id="jpaneltable" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="456" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+              <Component id="jpaneltable" min="-2" pref="175" max="-2" attributes="0"/>
+              <EmptySpace pref="71" max="32767" attributes="0"/>
               <Component id="radiodung" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="radiosai" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="txtSearch" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonsearch" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
@@ -135,7 +145,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="153" max="-2" attributes="0"/>
-                  <EmptySpace pref="285" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -251,6 +261,16 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Sai"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtSearch">
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonsearch">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Search"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonsearchMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

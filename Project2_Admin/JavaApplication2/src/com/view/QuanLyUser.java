@@ -5,27 +5,19 @@
  */
 package com.view;
 
-import com.dao.LawDAO;
 import com.dao.UserDAO;
-import com.dao.getCategoryfromCateName;
-import com.dao.getListLaw;
 import com.dao.getListUser;
-import com.model.Categorys;
-import com.model.Law;
 import com.model.Users;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -49,17 +41,22 @@ public class QuanLyUser extends javax.swing.JFrame {
         initComponents();
 
         this.setLayout(new GridBagLayout());
-
         GridBagConstraints constraints = new GridBagConstraints();
+        JPanel jPaneltop = new JPanel(new GridLayout(2, 1));
         JLabel lbtitlepage = new JLabel("Quản lý User");
         lbtitlepage.setFont(new Font("hihi", Font.BOLD, 24));
+        jPaneltop.add(lbtitlepage);
+        JPanel jsearch = new JPanel(new GridLayout(1, 2));
+        jsearch.add(txtSearch);
+        jsearch.add(buttonsearch);
+
+        jPaneltop.add(jsearch);
         constraints.gridx = 0;
         constraints.gridy = 0;
-        this.add(lbtitlepage, constraints);
+        this.add(jPaneltop, constraints);
         model = new DefaultTableModel();
         model.addColumn("UserID");
         model.addColumn("UserName");
-        model.addColumn("Password");
         model.addColumn("Gender");
         model.addColumn("Email");
         model.addColumn("CreateTime");
@@ -67,7 +64,7 @@ public class QuanLyUser extends javax.swing.JFrame {
 
         constraints.gridx = 0;
         constraints.gridy = 1;
-
+        jpaneltable.setPreferredSize(new Dimension(1300, 300));
         this.add(jpaneltable, constraints);
 
         JPanel jPanelshowdetailrow = new JPanel();
@@ -76,11 +73,9 @@ public class QuanLyUser extends javax.swing.JFrame {
 //        jPanelshowdetailrow.add(jScrollPane3);
         jtexUsername.setEditable(false);
         jtexgender.setEditable(false);
-        jtexpassword.setEditable(false);
         jtextemail.setEditable(false);
         jtexcreatetime.setEditable(false);
         jPanelshowdetailrow.add(jScrollPane2);
-        jPanelshowdetailrow.add(jScrollPane3);
         jPanelshowdetailrow.add(jScrollPane4);
         jPanelshowdetailrow.add(jScrollPane5);
         jPanelshowdetailrow.add(jScrollPane6);
@@ -102,7 +97,7 @@ public class QuanLyUser extends javax.swing.JFrame {
         JPanel jppassword = new JPanel(new GridLayout(1, 2));
         JLabel lbpassword = new JLabel("Password:");
         jppassword.add(lbpassword);
-         txtpassword.setPreferredSize(new Dimension(150, 35));
+        txtpassword.setPreferredSize(new Dimension(150, 35));
         jppassword.add(txtpassword);
         jppassword.setVisible(true);
 
@@ -118,7 +113,7 @@ public class QuanLyUser extends javax.swing.JFrame {
         JPanel jpemail = new JPanel(new GridLayout(1, 2));
         JLabel lbemail = new JLabel("Email:");
         jpemail.add(lbemail);
-         txtemail.setPreferredSize(new Dimension(150, 35));
+        txtemail.setPreferredSize(new Dimension(150, 35));
         jpemail.add(txtemail);
 //        JTextField txtLawDes = new JTextField();
 
@@ -167,9 +162,9 @@ public class QuanLyUser extends javax.swing.JFrame {
         for (int i = 0; i < arrayListUser.size(); i++) {
 
             if (arrayListUser.get(i).getGender() == 1) {
-                model.addRow(new Object[]{arrayListUser.get(i).getUserID(), arrayListUser.get(i).getUsername(), arrayListUser.get(i).getPassword(), "Nam", arrayListUser.get(i).getEmail(), arrayListUser.get(i).getCreatedTime()});
+                model.addRow(new Object[]{arrayListUser.get(i).getUserID(), arrayListUser.get(i).getUsername(), "Nam", arrayListUser.get(i).getEmail(), arrayListUser.get(i).getCreatedTime()});
             } else {
-                model.addRow(new Object[]{arrayListUser.get(i).getUserID(), arrayListUser.get(i).getUsername(), arrayListUser.get(i).getPassword(), "Nữ", arrayListUser.get(i).getEmail(), arrayListUser.get(i).getCreatedTime()});
+                model.addRow(new Object[]{arrayListUser.get(i).getUserID(), arrayListUser.get(i).getUsername(), "Nữ", arrayListUser.get(i).getEmail(), arrayListUser.get(i).getCreatedTime()});
             }
         }
     }
@@ -184,8 +179,6 @@ public class QuanLyUser extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtexUsername = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jtexpassword = new javax.swing.JTextArea();
         buttonThem = new javax.swing.JButton();
         buttonSua = new javax.swing.JButton();
         buttonXoa = new javax.swing.JButton();
@@ -198,6 +191,8 @@ public class QuanLyUser extends javax.swing.JFrame {
         jtextemail = new javax.swing.JTextArea();
         jScrollPane6 = new javax.swing.JScrollPane();
         jtexcreatetime = new javax.swing.JTextArea();
+        txtSearch = new javax.swing.JTextField();
+        buttonsearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -235,9 +230,9 @@ public class QuanLyUser extends javax.swing.JFrame {
         jpaneltableLayout.setVerticalGroup(
             jpaneltableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpaneltableLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addGap(2, 2, 2)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtexUsername.setColumns(20);
@@ -245,20 +240,10 @@ public class QuanLyUser extends javax.swing.JFrame {
         jtexUsername.setRows(5);
         jScrollPane2.setViewportView(jtexUsername);
 
-        jtexpassword.setColumns(20);
-        jtexpassword.setLineWrap(true);
-        jtexpassword.setRows(5);
-        jScrollPane3.setViewportView(jtexpassword);
-
         buttonThem.setText("Add");
         buttonThem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buttonThemMouseClicked(evt);
-            }
-        });
-        buttonThem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonThemActionPerformed(evt);
             }
         });
 
@@ -304,72 +289,81 @@ public class QuanLyUser extends javax.swing.JFrame {
         jtexcreatetime.setRows(5);
         jScrollPane6.setViewportView(jtexcreatetime);
 
+        buttonsearch.setText("Search");
+        buttonsearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonsearchMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(174, 174, 174)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(203, 203, 203)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton1)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(174, 174, 174)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(32, 32, 32)
-                                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jpaneltable, 1320, 1320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(buttonThem)
-                        .addGap(39, 39, 39)
-                        .addComponent(buttonSua)
-                        .addGap(46, 46, 46)
-                        .addComponent(buttonXoa)
-                        .addGap(38, 38, 38)
-                        .addComponent(buttonBack)))
-                .addContainerGap(492, Short.MAX_VALUE))
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton1))))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(jpaneltable, 1320, 1320, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(81, 81, 81)
+                .addComponent(buttonThem)
+                .addGap(39, 39, 39)
+                .addComponent(buttonSua)
+                .addGap(46, 46, 46)
+                .addComponent(buttonXoa)
+                .addGap(38, 38, 38)
+                .addComponent(buttonBack))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(372, 372, 372)
+                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(buttonsearch))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addComponent(jpaneltable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(456, 456, 456))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
-                .addGap(141, 141, 141)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jpaneltable, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(118, 118, 118)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButton2)
+                                    .addComponent(jRadioButton1)))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(303, 303, 303)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonThem)
                     .addComponent(buttonSua)
                     .addComponent(buttonXoa)
                     .addComponent(buttonBack))
-                .addGap(300, 300, 300))
+                .addGap(161, 161, 161)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonsearch)))
         );
 
         pack();
@@ -378,13 +372,11 @@ public class QuanLyUser extends javax.swing.JFrame {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int index = jTable1.getSelectedRow();
         String username = jTable1.getValueAt(index, 1).toString();
-        String pass = jTable1.getValueAt(index, 2).toString();
-        String gender = jTable1.getValueAt(index, 3).toString();
-        String email = jTable1.getValueAt(index, 4).toString();
-        String createtime = jTable1.getValueAt(index, 5).toString();
+        String gender = jTable1.getValueAt(index, 2).toString();
+        String email = jTable1.getValueAt(index, 3).toString();
+        String createtime = jTable1.getValueAt(index, 4).toString();
 
         jtexUsername.setText(username);
-        jtexpassword.setText(pass);
         jtexgender.setText(gender);
         jtextemail.setText(email);
         jtexcreatetime.setText(createtime);
@@ -392,60 +384,64 @@ public class QuanLyUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-                        HomeAdmin le = new HomeAdmin();
-                            le.setVisible(true);
-                            this.dispose();
+        HomeAdmin le = new HomeAdmin();
+        le.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
-
-    private void buttonThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonThemActionPerformed
-        String username = txtusername.getText();
-        String password = txtpassword.getText();
-        int gender = 0;
-        if (jRadioButton1.isSelected()) {
-            gender = 1;
-        } else if (jRadioButton2.isSelected()) {
-            gender = 0;
-        }
-
-        String emaill = txtemail.getText();
-
-        UserDAO dAO = new UserDAO();
-        if (dAO.regis(username, password, gender, emaill) == true) {
-            loaddata();
-            showtable();
-        }
-    }//GEN-LAST:event_buttonThemActionPerformed
 
     private void buttonXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonXoaActionPerformed
         int index = jTable1.getSelectedRow();
-        int iduser = (int) jTable1.getValueAt(index, 0);
-        UserDAO dAO = new UserDAO();
-        dAO.deleteusers(iduser);
+        if (index > 0) {
+            int iduser = (int) jTable1.getValueAt(index, 0);
+            int confirm = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn xoá không?", "Confrim", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (confirm == 0) {
+                UserDAO dAO = new UserDAO();
+                dAO.deleteusers(iduser);
 
-        loaddata();
-        showtable();
+                loaddata();
+                showtable();
+                JOptionPane.showMessageDialog(rootPane, "Xoá thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                jTable1.setRowSelectionInterval(0, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_buttonXoaActionPerformed
 
     private void buttonSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSuaActionPerformed
         int index = jTable1.getSelectedRow();
-        int idusers = (int) jTable1.getValueAt(index, 0);
+        if (index > 0) {
+            int idusers = (int) jTable1.getValueAt(index, 0);
 
-        String username = txtusername.getText();
-        String password = txtpassword.getText();
-        int gender = 0;
-        if (jRadioButton1.isSelected()) {
-            gender = 1;
-        } else if (jRadioButton2.isSelected()) {
-            gender = 0;
+            String username = txtusername.getText();
+            String password = txtpassword.getText();
+            int gender = 0;
+            if (jRadioButton1.isSelected()) {
+                gender = 1;
+            } else if (jRadioButton2.isSelected()) {
+                gender = 0;
+            }
+
+            String emaill = txtemail.getText();
+            boolean check = false;
+            if (username.isEmpty() || password.isEmpty() || emaill.isEmpty()) {
+                check = false;
+                JOptionPane.showMessageDialog(rootPane, "Không được để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                check = true;
+            }
+            if (check == true) {
+                UserDAO dAO = new UserDAO();
+
+                dAO.updatetraffic(username, password, gender, emaill, idusers);
+                loaddata();
+                showtable();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-
-        String emaill = txtemail.getText();
-
-        UserDAO dAO = new UserDAO();
-        
-        dAO.updatetraffic(username, password, gender, emaill, idusers);
-            loaddata();
-            showtable();
     }//GEN-LAST:event_buttonSuaActionPerformed
 
     private void buttonThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonThemMouseClicked
@@ -459,13 +455,31 @@ public class QuanLyUser extends javax.swing.JFrame {
         }
 
         String emaill = txtemail.getText();
-
-        UserDAO dAO = new UserDAO();
-        if (dAO.regis(username, password, gender, emaill) == true) {
-            loaddata();
-            showtable();
+        boolean check = false;
+        if (username.isEmpty() || password.isEmpty() || emaill.isEmpty()) {
+            check = false;
+            JOptionPane.showMessageDialog(rootPane, "Không được để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            check = true;
+        }
+        if (check == true) {
+            UserDAO dAO = new UserDAO();
+            if (dAO.regis(username, password, gender, emaill) == true) {
+                loaddata();
+                showtable();
+            }
         }
     }//GEN-LAST:event_buttonThemMouseClicked
+
+    private void buttonsearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonsearchMouseClicked
+        String key = txtSearch.getText();
+//        if(key==null){
+//        txtSearch.requestFocusInWindow();
+//        }
+        UserDAO userDAO = new UserDAO();
+        arrayListUser = userDAO.timkiem(key);
+        showtable();
+    }//GEN-LAST:event_buttonsearchMouseClicked
 
     /**
      * @param args the command line arguments
@@ -509,11 +523,11 @@ public class QuanLyUser extends javax.swing.JFrame {
     private javax.swing.JButton buttonSua;
     private javax.swing.JButton buttonThem;
     private javax.swing.JButton buttonXoa;
+    private javax.swing.JButton buttonsearch;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -522,7 +536,7 @@ public class QuanLyUser extends javax.swing.JFrame {
     private javax.swing.JTextArea jtexUsername;
     private javax.swing.JTextArea jtexcreatetime;
     private javax.swing.JTextArea jtexgender;
-    private javax.swing.JTextArea jtexpassword;
     private javax.swing.JTextArea jtextemail;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }

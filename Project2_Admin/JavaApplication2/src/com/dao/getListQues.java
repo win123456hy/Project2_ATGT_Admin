@@ -96,12 +96,8 @@ public class getListQues {
                 String imagelink = rs.getString("ImageLink");
 
                 Question q = new Question(quesid, null, null);
-                if (imagelink == null) {
-                    al = new Images(id, "a", q);
-                } else {
-                    al = new Images(id, imagelink, q);
-                }
 
+                al = new Images(id, imagelink, q);
             }
 
             return al;

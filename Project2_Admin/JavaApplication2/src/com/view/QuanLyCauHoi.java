@@ -132,7 +132,6 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
         jpquesdetail.add(txtquesdetail);
         jpquesdetail.setVisible(true);
 
-
         jpallinput.add(jpCombo);
         jpallinput.add(jpquesdetail);
         jpallinput.add(buttonchooseimage);
@@ -161,8 +160,7 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
         constraints.gridx = 0;
         constraints.gridy = 4;
         this.add(jPanelcontroll, constraints);
-        
-       
+
     }
 
     public void showtable() {
@@ -171,8 +169,8 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
             getCategoryfromCateName categoryForLawsMN = new getCategoryfromCateName();
             getListQues listQues = new getListQues();
             Images imagelinkofques = listQues.getImageforQues(arrayques.get(i).getQuestionID());
-            if (imagelinkofques.getImageLinks().equals("a")) {
-                model.addRow(new Object[]{arrayques.get(i).getQuestionID(), arrayques.get(i).getQuestionDetail(), categoryForLawsMN.getCategoryName(arrayques.get(i).getCategoryID().getCategoryID()).getCategoryName(),imagelinkofques.getImageID(), " "});
+            if (imagelinkofques == null) {
+                model.addRow(new Object[]{arrayques.get(i).getQuestionID(), arrayques.get(i).getQuestionDetail(), categoryForLawsMN.getCategoryName(arrayques.get(i).getCategoryID().getCategoryID()).getCategoryName(), "", ""});
             } else {
                 model.addRow(new Object[]{arrayques.get(i).getQuestionID(), arrayques.get(i).getQuestionDetail(), categoryForLawsMN.getCategoryName(arrayques.get(i).getCategoryID().getCategoryID()).getCategoryName(), imagelinkofques.getImageID(), imagelinkofques.getImageLinks()});
             }
@@ -391,12 +389,12 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
             if (listcate.get(i).getCategoryName().equals(catename)) {
                 getListQues listQues = new getListQues();
                 arrayques = listQues.getLques(listcate.get(i).getCategoryID());
-                
+                showtable();
                 break;
             }
-            
+
         }
-        showtable();
+
     }//GEN-LAST:event_jComboBox1ItemStateChanged
     ImageIcon imageIcon;
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -449,9 +447,9 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-                        HomeAdmin le = new HomeAdmin();
-                            le.setVisible(true);
-                            this.dispose();
+        HomeAdmin le = new HomeAdmin();
+        le.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void buttonThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonThemActionPerformed
@@ -481,23 +479,26 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
             QuesDAO quesDAO = new QuesDAO();
             quesDAO.addques(detail, cateid);
             int idlast = quesDAO.getquesidlastrow();
-
-            quesDAO.addimageforques(idlast, link);
+            if (link != null) {
+                quesDAO.addimageforques(idlast, link);
+            }
             for (int i = 0; i < listcate.size(); i++) {
                 if (listcate.get(i).getCategoryName().equals(catenam)) {
                     getListQues listQues = new getListQues();
                     arrayques = listQues.getLques(listcate.get(i).getCategoryID());
-                   
+                    showtable();
+                    break;
                 }
 
             }
-             showtable();
+
         }
         buttonchooseimage.setText("Chọn ảnh");
     }//GEN-LAST:event_buttonThemActionPerformed
 
     private void buttonXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonXoaActionPerformed
         int index = jTable1.getSelectedRow();
+     if(index>0){
         int idques = (int) jTable1.getValueAt(index, 0);
         int confirm = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn xoá không?", "Confrim", JOptionPane.YES_NO_CANCEL_OPTION);
 
@@ -519,10 +520,13 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
         } else {
             jTable1.setRowSelectionInterval(0, 0);
         }
+     }else
+          JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_buttonXoaActionPerformed
 
     private void buttonSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSuaActionPerformed
         int index = jTable1.getSelectedRow();
+        if(index>0){
         int idques = (int) jTable1.getValueAt(index, 0);
         String detail = txtquesdetail.getText();
 
@@ -563,10 +567,13 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
             }
         }
         buttonchooseimage.setText("Chọn ảnh");
+        }
+        else
+             JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!!", "Lỗi", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_buttonSuaActionPerformed
 
     private void buttonchooseimageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonchooseimageMouseClicked
-        fileChooser = new JFileChooser(new File("D:\\Github\\Project2_Admin\\JavaApplication2\\Images\\ImagesQuestion"));
+        fileChooser = new JFileChooser(new File("D:\\Github\\Project2_ATGT_Admin\\Project2_Admin\\JavaApplication2\\Images\\ImagesQuestion"));
         fileChooser.setFileFilter(new FileFilter() {
 
             @Override
@@ -597,7 +604,18 @@ public class QuanLyCauHoi extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonchooseimageMouseClicked
 
     private void buttonsearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonsearchMouseClicked
-        //String chuoitimkiem=  txtsearch.getText();
+         String key = txtsearch.getText();
+        String catenam = jComboBox1.getSelectedItem().toString();
+        int cateid = 0;
+        for (int i = 0; i < listcate.size(); i++) {
+            if (listcate.get(i).getCategoryName().equals(catenam)) {
+                cateid = listcate.get(i).getCategoryID();
+                break;
+            }
+        }
+        QuesDAO quesDAO = new QuesDAO();
+        arrayques = quesDAO.timkiem(key, cateid);
+        showtable();
     }//GEN-LAST:event_buttonsearchMouseClicked
 
     /**

@@ -5,11 +5,13 @@
  */
 package com.dao;
 
+import com.model.Users;
 import com.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 
@@ -137,6 +139,36 @@ public class UserDAO {
         } finally {
 
             DBUtils.closeTwo(con, stm);
+
+        }
+    }
+    
+    public ArrayList<Users> timkiem(String tukhoa) {
+        String sql = "select * from Users where Username like "+"'%"+tukhoa+"%'";
+        Connection con = DBUtils.open();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Users> al = new ArrayList<>();
+        try {
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("UserID");
+                String Username = rs.getString("Username");
+                String Password = rs.getString("Password");
+                int gender=rs.getInt("Gender");
+                Date CreatedTime = rs.getDate("CreatedTime");
+                 String Email = rs.getString("Email");
+                 al.add(new Users(id, Username, gender, Email, Password, CreatedTime));
+            }
+
+            return al;
+        } catch (SQLException ex) {
+            return null;
+        } finally {
+
+            DBUtils.closeAll(con, stm, rs);
 
         }
     }

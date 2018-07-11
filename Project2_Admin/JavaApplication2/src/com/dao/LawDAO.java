@@ -5,10 +5,15 @@
  */
 package com.dao;
 
+import com.model.Categorys;
+import com.model.Law;
+import com.model.Trafficsigns;
 import com.utils.DBUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -106,6 +111,35 @@ public class LawDAO {
              
             DBUtils.closeTwo(con, stm);
           
+        }
+    }
+      public ArrayList<Law> timkiem(String tukhoa) {
+        String sql = "select * from Laws where LawTitle like "+"'%"+tukhoa+"%'"+"or LawDetail like "+"'%"+tukhoa+"%'";
+        Connection con = DBUtils.open();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Law> al = new ArrayList<>();
+        try {
+            stm = con.prepareStatement(sql);
+
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("LawID");
+                String LawTitle = rs.getString("LawTitle");
+                String LawDetail = rs.getString("LawDetail");
+                Date LawTimeRelease = rs.getDate("LawTimeRelease");
+                int cateid=rs.getInt("CategoryID");
+                Categorys c = new Categorys(cateid, null, null);
+                al.add(new Law(id, LawTitle, LawDetail, LawTimeRelease, c));
+            }
+
+            return al;
+        } catch (SQLException ex) {
+            return null;
+        } finally {
+
+            DBUtils.closeAll(con, stm, rs);
+
         }
     }
 }

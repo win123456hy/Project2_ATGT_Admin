@@ -5,6 +5,7 @@
  */
 package com.dao;
 
+import com.model.Categorys;
 import com.model.Images;
 import com.model.Question;
 import com.utils.DBUtils;
@@ -12,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -206,6 +208,33 @@ public class QuesDAO {
              
             DBUtils.closeTwo(con, stm);
           
+        }
+    }
+        
+        public ArrayList<Question> timkiem(String tukhoa,int categoryid) {
+        String sql = "select * from questions where  CategoryID=? and QuestionDetail like "+"'%"+tukhoa+"%'";
+        Connection con = DBUtils.open();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Question> al = new ArrayList<>();
+        try {
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, categoryid);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("QuestionID");
+                String AnswerDetail = rs.getString("QuestionDetail");
+                Categorys c=new Categorys(categoryid, null, null);
+                al.add(new Question(id, AnswerDetail, c));
+            }
+
+            return al;
+        } catch (SQLException ex) {
+            return null;
+        } finally {
+
+            DBUtils.closeAll(con, stm, rs);
+
         }
     }
 }

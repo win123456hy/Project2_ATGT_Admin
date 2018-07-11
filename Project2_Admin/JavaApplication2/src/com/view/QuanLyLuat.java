@@ -23,6 +23,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -48,13 +49,20 @@ public class QuanLyLuat extends javax.swing.JFrame {
         initComponents();
 
         this.setLayout(new GridBagLayout());
-
         GridBagConstraints constraints = new GridBagConstraints();
+        JPanel jPaneltop = new JPanel(new GridLayout(2, 1));
         JLabel lbtitlepage = new JLabel("Quản lý Luật");
         lbtitlepage.setFont(new Font("hihi", Font.BOLD, 24));
+        jPaneltop.add(lbtitlepage);
+        JPanel jsearch = new JPanel(new GridLayout(1, 2));
+        jsearch.add(txtSearch);
+        jsearch.add(buttonsearch);
+
+        jPaneltop.add(jsearch);
+
         constraints.gridx = 0;
         constraints.gridy = 0;
-        this.add(lbtitlepage, constraints);
+        this.add(jPaneltop, constraints);
         model = new DefaultTableModel();
         model.addColumn("LawID");
         model.addColumn("LawTitle");
@@ -65,7 +73,7 @@ public class QuanLyLuat extends javax.swing.JFrame {
 
         constraints.gridx = 0;
         constraints.gridy = 1;
-
+        jpaneltable.setPreferredSize(new Dimension(1300, 300));
         this.add(jpaneltable, constraints);
 
         JPanel jPanelshowdetailrow = new JPanel();
@@ -139,7 +147,7 @@ public class QuanLyLuat extends javax.swing.JFrame {
         GridBagConstraints bagConstraints = new GridBagConstraints();
         bagConstraints.gridx = 0;
         bagConstraints.gridy = 0;
-        bagConstraints.insets=new Insets(0, 0, 0, 100);
+        bagConstraints.insets = new Insets(0, 0, 0, 100);
         jPanelcontroll.add(buttonThem, bagConstraints);
         bagConstraints.gridx = 1;
         bagConstraints.gridy = 0;
@@ -163,7 +171,15 @@ public class QuanLyLuat extends javax.swing.JFrame {
 
             getCategoryfromCateName categoryForLawsMN = new getCategoryfromCateName();
 
-            model.addRow(new Object[]{arrayListlay.get(i).getLawID(),arrayListlay.get(i).getLawTitle(), arrayListlay.get(i).getLawDetail(), arrayListlay.get(i).getLawTimeRelease(), categoryForLawsMN.getCategoryName(arrayListlay.get(i).getCategoryID().getCategoryID()).getCategoryName()});
+            model.addRow(new Object[]{arrayListlay.get(i).getLawID(), arrayListlay.get(i).getLawTitle(), arrayListlay.get(i).getLawDetail(), arrayListlay.get(i).getLawTimeRelease(), categoryForLawsMN.getCategoryName(arrayListlay.get(i).getCategoryID().getCategoryID()).getCategoryName()});
+        }
+    }
+
+    public void showtabletimkiem() {
+        model.setNumRows(0);
+        for (int i = 0; i < arrayListlay.size(); i++) {
+
+            model.addRow(new Object[]{arrayListlay.get(i).getLawID(), arrayListlay.get(i).getLawTitle(), arrayListlay.get(i).getLawDetail(), arrayListlay.get(i).getLawTimeRelease(), arrayListlay.get(i).getCategoryID().getCategoryID()});
         }
     }
 
@@ -184,6 +200,8 @@ public class QuanLyLuat extends javax.swing.JFrame {
         buttonSua = new javax.swing.JButton();
         buttonXoa = new javax.swing.JButton();
         buttonBack = new javax.swing.JButton();
+        txtSearch = new javax.swing.JTextField();
+        buttonsearch = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -228,8 +246,8 @@ public class QuanLyLuat extends javax.swing.JFrame {
             jpaneltableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpaneltableLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jtextitle.setColumns(60);
@@ -270,6 +288,13 @@ public class QuanLyLuat extends javax.swing.JFrame {
             }
         });
 
+        buttonsearch.setText("Search");
+        buttonsearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonsearchMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,18 +303,25 @@ public class QuanLyLuat extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(174, 174, 174)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(123, 123, 123)))
-                        .addComponent(jpaneltable, 1320, 1320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(1449, 1449, 1449))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(174, 174, 174)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(33, 33, 33)
+                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(305, 305, 305)
+                                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(21, 21, 21)
+                                        .addComponent(buttonsearch)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jpaneltable, 1320, 1320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(81, 81, 81)
@@ -304,16 +336,12 @@ public class QuanLyLuat extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jpaneltable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(456, 456, 456))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(270, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonsearch))
+                .addGap(56, 56, 56)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -326,6 +354,15 @@ public class QuanLyLuat extends javax.swing.JFrame {
                     .addComponent(buttonXoa)
                     .addComponent(buttonBack))
                 .addGap(300, 300, 300))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jpaneltable, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -353,89 +390,127 @@ public class QuanLyLuat extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void buttonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBackActionPerformed
-                        HomeAdmin le = new HomeAdmin();
-                            le.setVisible(true);
-                            this.dispose();
+        HomeAdmin le = new HomeAdmin();
+        le.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonBackActionPerformed
 
     private void buttonThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonThemActionPerformed
-      String title= txtLawtitle.getText();
-      String detail= txtlawdetail.getText();
-       Date timerelease  = jDateChooser1.getDate();
-       
-      String catenam= jComboBox1.getSelectedItem().toString();
-      int cateid=0;
-       for (int i = 0; i < listcate.size(); i++) {
+        String title = txtLawtitle.getText();
+        String detail = txtlawdetail.getText();
+        Date timerelease = jDateChooser1.getDate();
+        boolean check = false;
+        if (detail.isEmpty() || title.isEmpty() || timerelease == null) {
+            check = false;
+            JOptionPane.showMessageDialog(rootPane, "Không được để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        } else {
+            check = true;
+        }
+        String catenam = jComboBox1.getSelectedItem().toString();
+        int cateid = 0;
+        for (int i = 0; i < listcate.size(); i++) {
             if (listcate.get(i).getCategoryName().equals(catenam)) {
-                cateid=listcate.get(i).getCategoryID();
+                cateid = listcate.get(i).getCategoryID();
                 break;
             }
         }
-       
-       
-        LawDAO lawDAO=new LawDAO();
-        lawDAO.addlaw(title, detail, timerelease, cateid);
-       
-        
-        String catename = jComboBox1.getSelectedItem().toString();
-        for (int i = 0; i < listcate.size(); i++) {
-            if (listcate.get(i).getCategoryName().equals(catename)) {
-                getListLaw listLaw = new getListLaw();
-                arrayListlay = listLaw.getLLaw(listcate.get(i).getCategoryID());
-                showtable();
-            }
 
+        if (check == true) {
+            LawDAO lawDAO = new LawDAO();
+            lawDAO.addlaw(title, detail, timerelease, cateid);
+
+            String catename = jComboBox1.getSelectedItem().toString();
+            for (int i = 0; i < listcate.size(); i++) {
+                if (listcate.get(i).getCategoryName().equals(catename)) {
+                    getListLaw listLaw = new getListLaw();
+                    arrayListlay = listLaw.getLLaw(listcate.get(i).getCategoryID());
+                    showtable();
+                }
+
+            }
         }
     }//GEN-LAST:event_buttonThemActionPerformed
 
     private void buttonXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonXoaActionPerformed
         int index = jTable1.getSelectedRow();
-        int idlaw = (int)jTable1.getValueAt(index, 0);
-        LawDAO lawDAO=new LawDAO();
-        lawDAO.deletelaw(idlaw);
-        
-        String catename = jComboBox1.getSelectedItem().toString();
-        for (int i = 0; i < listcate.size(); i++) {
-            if (listcate.get(i).getCategoryName().equals(catename)) {
-                getListLaw listLaw = new getListLaw();
-                arrayListlay = listLaw.getLLaw(listcate.get(i).getCategoryID());
-                showtable();
-            }
+        if (index > 0) {
+            int idlaw = (int) jTable1.getValueAt(index, 0);
+            int confirm = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn xoá không?", "Confrim", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (confirm == 0) {
+                LawDAO lawDAO = new LawDAO();
+                lawDAO.deletelaw(idlaw);
 
+                String catename = jComboBox1.getSelectedItem().toString();
+                for (int i = 0; i < listcate.size(); i++) {
+                    if (listcate.get(i).getCategoryName().equals(catename)) {
+                        getListLaw listLaw = new getListLaw();
+                        arrayListlay = listLaw.getLLaw(listcate.get(i).getCategoryID());
+                        showtable();
+                    }
+
+                }
+                JOptionPane.showMessageDialog(rootPane, "Xoá thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+
+            } else {
+                jTable1.setRowSelectionInterval(0, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_buttonXoaActionPerformed
 
     private void buttonSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSuaActionPerformed
         int index = jTable1.getSelectedRow();
-        int idlaw = (int)jTable1.getValueAt(index, 0);
-        String title= txtLawtitle.getText();
-      String detail= txtlawdetail.getText();
-       Date timerelease  = jDateChooser1.getDate();
-       
-      String catenam= jComboBox1.getSelectedItem().toString();
-      int cateid=0;
-       for (int i = 0; i < listcate.size(); i++) {
-            if (listcate.get(i).getCategoryName().equals(catenam)) {
-                cateid=listcate.get(i).getCategoryID();
-                break;
+        if (index > 0) {
+            int idlaw = (int) jTable1.getValueAt(index, 0);
+            String title = txtLawtitle.getText();
+            String detail = txtlawdetail.getText();
+            Date timerelease = jDateChooser1.getDate();
+
+            String catenam = jComboBox1.getSelectedItem().toString();
+            int cateid = 0;
+            for (int i = 0; i < listcate.size(); i++) {
+                if (listcate.get(i).getCategoryName().equals(catenam)) {
+                    cateid = listcate.get(i).getCategoryID();
+                    break;
+                }
             }
-        }
-        
-        
-        
-        LawDAO lawDAO=new LawDAO();
-        lawDAO.updatelaw(idlaw, title,detail,timerelease,cateid);
-        
-        String catename = jComboBox1.getSelectedItem().toString();
-        for (int i = 0; i < listcate.size(); i++) {
-            if (listcate.get(i).getCategoryName().equals(catename)) {
-                getListLaw listLaw = new getListLaw();
-                arrayListlay = listLaw.getLLaw(listcate.get(i).getCategoryID());
-                showtable();
+            boolean check = false;
+            if (detail.isEmpty() || title.isEmpty() || timerelease == null) {
+                check = false;
+                JOptionPane.showMessageDialog(rootPane, "Không được để rỗng", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } else {
+                check = true;
             }
 
+            if (check == true) {
+                LawDAO lawDAO = new LawDAO();
+                lawDAO.updatelaw(idlaw, title, detail, timerelease, cateid);
+
+                String catename = jComboBox1.getSelectedItem().toString();
+                for (int i = 0; i < listcate.size(); i++) {
+                    if (listcate.get(i).getCategoryName().equals(catename)) {
+                        getListLaw listLaw = new getListLaw();
+                        arrayListlay = listLaw.getLLaw(listcate.get(i).getCategoryID());
+                        showtable();
+                    }
+
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Bạn chưa chọn hàng nào!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_buttonSuaActionPerformed
+
+    private void buttonsearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonsearchMouseClicked
+        String key = txtSearch.getText();
+//        if(key==null){
+//        txtSearch.requestFocusInWindow();
+//        }
+        LawDAO lawDAO = new LawDAO();
+        arrayListlay = lawDAO.timkiem(key);
+        showtabletimkiem();
+    }//GEN-LAST:event_buttonsearchMouseClicked
 
     /**
      * @param args the command line arguments
@@ -477,6 +552,7 @@ public class QuanLyLuat extends javax.swing.JFrame {
     private javax.swing.JButton buttonSua;
     private javax.swing.JButton buttonThem;
     private javax.swing.JButton buttonXoa;
+    private javax.swing.JButton buttonsearch;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -486,5 +562,6 @@ public class QuanLyLuat extends javax.swing.JFrame {
     private javax.swing.JPanel jpaneltable;
     private javax.swing.JTextArea jtexdetail;
     private javax.swing.JTextArea jtextitle;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
